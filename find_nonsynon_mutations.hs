@@ -83,11 +83,10 @@ main = do
         error "Cannot proceed! Length mismatch."
      P.putStrLn$ "Number of total mutations: "++ show(T.count "." aligns)
      P.putStrLn$ "Number of total insertions: "++ show(T.count "-" aligns)
-
-     P.putStrLn$ "\nNumber of amino acids: "++show (T.length codingChanges)
+     P.putStrLn$ "Number of amino acids: "++show (T.length codingChanges)
      unless (T.length codingChanges == len1 `quot` 3) $
        error ("Expected number of coding changes to be "++show(len1 `quot` 3))
-     P.putStrLn$ " (Whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
+     P.putStrLn$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
 --     P.putStrLn$ "Coding or non-coding changes?: "++show codingChanges
 
      codingMuts <- forM [0.. len1-1] $ \ ix -> do 
