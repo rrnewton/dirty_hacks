@@ -39,7 +39,7 @@ findChunks (ln1:ln2:ln3:rst)
     if not (T.all validAlignChar syms) 
     then error $ "findChunks: Got what seems to be a matching entry, but middle line contains invalid alignment char: "++show syms
     else 
-     trace ("Passed: "++ show (ln1)) $ 
+--     trace ("Passed: "++ show (ln1)) $ 
      (seq1,syms,seq2) : findChunks rst
 
 findChunks (hd:rst) = 
