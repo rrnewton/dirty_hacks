@@ -1,7 +1,11 @@
 #!/usr/bin/env runghc
 
-{-# LANGUAGE OverloadedStrings #-}
+-- | USAGE: You should be able to just run this script.
+-- 
+--   HOWEVER, it requires a full Haskell platform install (namely the 'text'
+--   package).
 
+{-# LANGUAGE OverloadedStrings #-}
 import Control.Monad
 import qualified Data.ByteString.Char8 as B
 import Data.Text as T
