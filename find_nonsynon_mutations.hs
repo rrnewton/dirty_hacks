@@ -13,6 +13,7 @@ import Data.Text.Encoding as E
 import Data.Text.Read 
 -- import qualified Data.List as L
 import Data.Char
+import Data.Either
 import System.Environment
 import Prelude as P
 import Debug.Trace
@@ -84,9 +85,9 @@ main = do
      P.putStrLn$ "Number of total mutations: "++ show(T.count "." aligns)
      P.putStrLn$ "Number of total insertions: "++ show(T.count "-" aligns)
      P.putStrLn$ "Number of amino acids: "++show (T.length codingChanges)
+     P.putStrLn$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
      unless (T.length codingChanges == len1 `quot` 3) $
        error ("Expected number of coding changes to be "++show(len1 `quot` 3))
-     P.putStrLn$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
 --     P.putStrLn$ "Coding or non-coding changes?: "++show codingChanges
 
      codingMuts <- forM [0.. len1-1] $ \ ix -> do 
@@ -96,17 +97,19 @@ main = do
          '.' -> do P.putStr$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
                    case codingChanges `index` (ix `quot` 3) of
                      '*' -> do P.putStrLn ", non-coding."
-                               return Nothing
+                               return (Just (Left (st,en)))
                      _   -> do P.putStrLn ", CODING."
-                               return (Just (st,en))
+                               return (Just (Right (st,en)))
          _   -> return Nothing
-     P.putStrLn "\nFinal table: FROM, TO, COUNT"
-     P.putStrLn "----------------------------"
-     forM_ (frequency $ catMaybes codingMuts) $ \ ((st,en),cnt) -> do
-       P.putStrLn$ "  "++[st]++" "++[en]++" "++show cnt
-       return ()
-     -- print seq1
-     -- print aligns
+     P.putStrLn "\nFinal tables: FROM, TO, COUNT"
+     let printTable changes = do 
+          P.putStrLn "----------------------------"
+          forM_ (frequency changes) $ \ ((st,en),cnt) -> do
+            P.putStrLn$ "  "++[st]++" "++[en]++" "++show cnt
+     P.putStrLn "\nNON-synonomous changes:"
+     printTable $ rights $ catMaybes codingMuts
+     P.putStrLn "\nSynonomous changes:"
+     printTable $ lefts $ catMaybes codingMuts
      return ()
 
 -- Is a given line a comment line:
