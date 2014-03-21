@@ -91,7 +91,7 @@ main = do
      chatter$ "Number of total mutations: "++ show numMuts
      chatter$ "Number of total insertions: "++ show(T.count "-" aligns)
      chatter$ "Number of amino acids: "++show (T.length codingChanges)
-     chatter$ " (Dropped "++show (T.length codingChanges - T.length codingChanges0)++" spaces from beginning of amino acid allignment.)"
+     chatter$ " (Dropped "++show (T.length codingChanges0 - T.length codingChanges)++" spaces from beginning of amino acid allignment.)"
      chatter$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
      unless (T.length codingChanges == len1 `quot` 3) $
        error ("Expected number of coding changes to be "++show(len1 `quot` 3))
@@ -103,9 +103,9 @@ main = do
        case aligns `index` ix of 
          '.' -> do chatterNoLn$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
                    case codingChanges `index` (ix `quot` 3) of
-                     '*' -> do chatter ", non-coding."
+                     '*' -> do chatter ", synonymous."
                                return (Just (Left (st,en)))
-                     _   -> do chatter ", CODING."
+                     _   -> do chatter ", non-synonymous."
                                return (Just (Right (st,en)))
          _   -> return Nothing
      chatter "\nFinal table data, CSV format:"
@@ -116,7 +116,7 @@ main = do
               [takeBaseName wat, kind, [st], [en], show cnt, show numMuts]
 --            chatter$ "  "++[st]++" "++[en]++" "++show cnt
      printTable "NonSynon" $ rights $ catMaybes codingMuts
-     printTable "Synon"    $ lefts $ catMaybes codingMuts
+     printTable "Synon"    $ lefts  $ catMaybes codingMuts
      return ()
 
 realOut :: String -> IO ()
