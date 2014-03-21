@@ -1,0 +1,7 @@
+
+
+install:
+	cabal install . --bindir=.
+
+
+
