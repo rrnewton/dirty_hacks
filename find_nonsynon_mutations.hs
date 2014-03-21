@@ -11,14 +11,17 @@ import qualified Data.ByteString.Char8 as B
 import Data.Text as T
 import Data.Text.Encoding as E
 import Data.Text.Read 
--- import qualified Data.List as L
+import qualified Data.List as L
 import Data.Char
 import Data.Either
-import System.Environment
-import Prelude as P
 import Debug.Trace
 import Data.Map (fromListWith, toList)
 import Data.Maybe (catMaybes)
+import Prelude as P
+import System.IO 
+import System.Environment
+import System.FilePath
+--------------------------------------------------------------------------------
 
 -- | Look for three-line sequences of sequence text, alignment, sequence text.  For
 -- example:
@@ -53,7 +56,7 @@ main = do
   case args of 
    [] -> error "Command should take two args: <.water file> <.aln file> "
    [wat, aln] -> do 
-     P.putStrLn$  "Processing files: "++ show args
+     chatter$  "Processing files: "++ show args
      f1 <- B.readFile wat
      f2 <- B.readFile aln
      let t1 = E.decodeUtf8 f1
@@ -78,41 +81,60 @@ main = do
          codingChanges0   = T.concat $ P.map (T.drop whitespaceMax) coding
          codingChanges    = T.dropWhile (== ' ') codingChanges0
 
+         numMuts = (T.count "." aligns)
+
 --     mapM_ print chunks
-     P.putStrLn$ "Parsed "++show(P.length chunks)++" valid chunks of sequence alignment data."
-     P.putStrLn$ "Length of seq1, aligns, seq2: "++show(len1,len2,len3)
+     chatter$ "Parsed "++show(P.length chunks)++" valid chunks of sequence alignment data."
+     chatter$ "Length of seq1, aligns, seq2: "++show(len1,len2,len3)
      unless (len1 == len2 && len2 == len3) $ 
         error "Cannot proceed! Length mismatch."
-     P.putStrLn$ "Number of total mutations: "++ show(T.count "." aligns)
-     P.putStrLn$ "Number of total insertions: "++ show(T.count "-" aligns)
-     P.putStrLn$ "Number of amino acids: "++show (T.length codingChanges)
-     P.putStrLn$ " (Dropped "++show (T.length codingChanges - T.length codingChanges0)++" spaces from beginning of amino acid allignment.)"
-     P.putStrLn$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
+     chatter$ "Number of total mutations: "++ show numMuts
+     chatter$ "Number of total insertions: "++ show(T.count "-" aligns)
+     chatter$ "Number of amino acids: "++show (T.length codingChanges)
+     chatter$ " (Dropped "++show (T.length codingChanges - T.length codingChanges0)++" spaces from beginning of amino acid allignment.)"
+     chatter$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
      unless (T.length codingChanges == len1 `quot` 3) $
        error ("Expected number of coding changes to be "++show(len1 `quot` 3))
---     P.putStrLn$ "Coding or non-coding changes?: "++show codingChanges
+--     chatter$ "Coding or non-coding changes?: "++show codingChanges
 
      codingMuts <- forM [0.. len1-1] $ \ ix -> do 
        let st = seq1 `index` ix
            en = seq2 `index` ix
        case aligns `index` ix of 
-         '.' -> do P.putStr$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
+         '.' -> do chatterNoLn$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
                    case codingChanges `index` (ix `quot` 3) of
-                     '*' -> do P.putStrLn ", non-coding."
+                     '*' -> do chatter ", non-coding."
                                return (Just (Left (st,en)))
-                     _   -> do P.putStrLn ", CODING."
+                     _   -> do chatter ", CODING."
                                return (Just (Right (st,en)))
          _   -> return Nothing
-     P.putStrLn "\nFinal tables: FROM, TO, COUNT"
-     let printTable changes = do 
-          P.putStrLn "----------------------------"
+     chatter "\nFinal table data, CSV format:"
+     realOut "File, Kind, From, To, Count, TotalMuts"
+     let printTable kind changes = do 
           forM_ (frequency changes) $ \ ((st,en),cnt) -> do
-            P.putStrLn$ "  "++[st]++" "++[en]++" "++show cnt
-     P.putStrLn "\nNON-synonomous changes:"
-     printTable $ rights $ catMaybes codingMuts
-     P.putStrLn "\nSynonomous changes:"
-     printTable $ lefts $ catMaybes codingMuts
+            realOut $ P.concat $ L.intersperse ", " $ 
+              [takeBaseName wat, kind, [st], [en], show cnt, show numMuts]
+--            chatter$ "  "++[st]++" "++[en]++" "++show cnt
+     printTable "NonSynon" $ rights $ catMaybes codingMuts
+     printTable "Synon"    $ lefts $ catMaybes codingMuts
      return ()
+
+realOut :: String -> IO ()
+realOut str = do 
+   flushBoth
+   hPutStrLn stdout str
+--   flushBoth
+
+chatterNoLn :: String -> IO ()
+chatterNoLn str = do 
+   hPutStr stderr str
+--   flushBoth
+
+chatter :: String -> IO ()
+chatter str = chatterNoLn (str++"\n")
+
+flushBoth :: IO ()
+flushBoth = do hFlush stderr; hFlush stdout
 
 -- Is a given line a comment line:
 isComment :: Text -> Bool
