@@ -74,8 +74,9 @@ main = do
      let coding = P.filter (T.any (== '*')) $ 
                   T.lines t2
          whitespaceDistro = P.map (T.length . T.takeWhile isSpace) coding
-         whitespaceMax = P.minimum whitespaceDistro
-         codingChanges = T.concat $ P.map (T.drop whitespaceMax) coding
+         whitespaceMax    = P.minimum whitespaceDistro
+         codingChanges0   = T.concat $ P.map (T.drop whitespaceMax) coding
+         codingChanges    = T.dropWhile (== ' ') codingChanges0
 
 --     mapM_ print chunks
      P.putStrLn$ "Parsed "++show(P.length chunks)++" valid chunks of sequence alignment data."
@@ -85,6 +86,7 @@ main = do
      P.putStrLn$ "Number of total mutations: "++ show(T.count "." aligns)
      P.putStrLn$ "Number of total insertions: "++ show(T.count "-" aligns)
      P.putStrLn$ "Number of amino acids: "++show (T.length codingChanges)
+     P.putStrLn$ " (Dropped "++show (T.length codingChanges - T.length codingChanges0)++" spaces from beginning of amino acid allignment.)"
      P.putStrLn$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
      unless (T.length codingChanges == len1 `quot` 3) $
        error ("Expected number of coding changes to be "++show(len1 `quot` 3))
