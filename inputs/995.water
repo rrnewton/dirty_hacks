@@ -1,0 +1,106 @@
+########################################
+# Program: water
+# Rundate: Thu  3 Jun 2010 11:47:57
+# Commandline: water
+#    -asequence 995_A.ffn
+#    -bsequence 995_B.ffn
+#    -gapopen 10
+#    -gapextend 0.5
+#    -outfile 995.water
+# Align_format: srspair
+# Report_file: 995.water
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: 74_15
+# 2: contig00004_1
+# Matrix: EDNAFULL
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 894
+# Identity:     877/894 (98.1%)
+# Similarity:   877/894 (98.1%)
+# Gaps:          17/894 ( 1.9%)
+# Score: 4357.5
+# 
+#
+#=======================================
+
+74_15              1 ATAGTTAAATTAAGCATGTCACTGAATAAAACGATATACGAAGGTAAAGC     50
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1      1 ATAGTTAAATTAAGCATGTCACTGAATAAAACGATATACGAAGGTAAAGC     50
+
+74_15             51 GAAAGCCATTATTGAAACTGAAGACTCATCAACTGTTATACAGCACTTTA    100
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1     51 GAAAGCCATTATTGAAACTGAAGACTCATCAACTGTTATACAGCACTTTA    100
+
+74_15            101 AAGATGATGTTACAGCATTCAATAAGGAAAAATATGAAATTATTGAGAGC    150
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    101 AAGATGATGTTACAGCATTCAATAAGGAAAAATATGAAATTATTGAGAGC    150
+
+74_15            151 AAAGGAATAATTAATAATCATGTTAGTGCTTTTATCATGGAAAAGCTTGA    200
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    151 AAAGGAATAATTAATAATCATGTTAGTGCTTTTATCATGGAAAAGCTTGA    200
+
+74_15            201 GAAAGCAGGAATTAGCACACACTTTATAAAAACTCTGAATGAAAGAGAGC    250
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    201 GAAAGCAGGAATTAGCACACACTTTATAAAAACTCTGAATGAAAGAGAGC    250
+
+74_15            251 AGCTAGTCAAAAAACTCAAAATCATACCTCTTGAAGTAGTAGTGAGGAAT    300
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    251 AGCTAGTCAAAAAACTCAAAATCATACCTCTTGAAGTAGTAGTGAGGAAT    300
+
+74_15            301 GTTGCAGCTGGCAGCTTTTGCAAACGTTTTAATATCAAAGAAGGTGAGAG    350
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    301 GTTGCAGCTGGCAGCTTTTGCAAACGTTTTAATATCAAAGAAGGTGAGAG    350
+
+74_15            351 GCTTGCATCTCCTATAATCGAGTTTTTTTACAAAAATGATGACCTAGCCG    400
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    351 GCTTGCATCTCCTATAATCGAGTTTTTTTACAAAAATGATGACCTAGCCG    400
+
+74_15            401 ACCCAATGGTAAATGAAAATCACATACTGTATTTTGATTGGCTATCTAGC    450
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    401 ACCCAATGGTAAATGAAAATCACATACTGTATTTTGATTGGCTATCTAGC    450
+
+74_15            451 AAAGAAATGGATGAAGTAAAAACTACAACTTTAAAGATCAACGAAATCCT    500
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    451 AAAGAAATGGATGAAGTAAAAACTACAACTTTAAAGATCAACGAAATCCT    500
+
+74_15            501 AATTGATTTATTCTCAAATGCAGGCATAGATCTAGTTGACCTTAAATTGG    550
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    501 AATTGATTTATTCTCAAATGCAGGCATAGATCTAGTTGACCTTAAATTGG    550
+
+74_15            551 AATTTGGCAGATTGATAAATGACAGTACTAAAATCATTTTAGCCGATGAA    600
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    551 AATTTGGCAGATTGATAAATGACAGTACTAAAATCATTTTAGCCGATGAA    600
+
+74_15            601 ATCAGCCCTGATAACTGCAGGTTATGGGATAAAAATACTTATAAAAAGCT    650
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    601 ATCAGCCCTGATAACTGCAGGTTATGGGATAAAAATACTTATAAAAAGCT    650
+
+74_15            651 AGATAAAGACGTCTTTCGTTTGAATTTAGGCAACTTAGAAAAAAGCATAC    700
+                     |||||||||||||||||||||||||||||||||||| |||||||||||||
+contig00004_1    651 AGATAAAGACGTCTTTCGTTTGAATTTAGGCAACTT-GAAAAAAGCATAC    699
+
+74_15            701 TTAGAAGTTGCGGAAAGATTGTCAGTAGAGTTAGGTTAACTAAATACTAC    750
+                     ||||||||||||||||||||||||||||||||||||              
+contig00004_1    700 TTAGAAGTTGCGGAAAGATTGTCAGTAGAGTTAGGT--------------    735
+
+74_15            751 TCTATCAAGTGGAGGGTTACATGCCTCATCAAGTTTTCCAATAATTTCAA    800
+                       ||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    736 --TATCAAGTGGAGGGTTACATGCCTCATCAAGTTTTCCAATAATTTCAA    783
+
+74_15            801 TTTTTTCTCCACGTTTTTGGAAATGATTTTTCACGTTTTGCATATTCTCA    850
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    784 TTTTTTCTCCACGTTTTTGGAAATGATTTTTCACGTTTTGCATATTCTCA    833
+
+74_15            851 GAACTTACGATCAATACCATACCAATACCACAATTAAATGTTTT    894
+                     ||||||||||||||||||||||||||||||||||||||||||||
+contig00004_1    834 GAACTTACGATCAATACCATACCAATACCACAATTAAATGTTTT    877
+
+
+#---------------------------------------
+#---------------------------------------
