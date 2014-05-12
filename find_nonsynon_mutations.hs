@@ -74,11 +74,11 @@ main = do
          len3   = T.length seq2
 
      -- The second file has the amino acids:
-     let coding = P.filter (T.any (== '*')) $ 
-                  T.lines t2
-         whitespaceDistro = P.map (T.length . T.takeWhile isSpace) coding
+     let aminoLines = P.filter (T.any (== '*')) $ 
+                      T.lines t2
+         whitespaceDistro = P.map (T.length . T.takeWhile isSpace) aminoLines
          whitespaceMax    = P.minimum whitespaceDistro
-         aminoChanges0   = T.concat $ P.map (T.drop whitespaceMax) coding
+         aminoChanges0   = T.concat $ P.map (T.drop whitespaceMax) aminoLines
          aminoChanges    = T.dropWhile (== ' ') aminoChanges0
 
          numMuts = (T.count "." aligns)
@@ -95,9 +95,8 @@ main = do
      chatter$ " (Leading whitespace length distribution for synonymity (amino) patterns: "++show whitespaceDistro++")"
      unless (T.length aminoChanges == len1 `quot` 3) $
        error ("Expected number of amino changes to be "++show(len1 `quot` 3))
---     chatter$ "Coding or non-coding changes?: "++show aminoChanges
 
-     codingMuts <- forM [0.. len1-1] $ \ ix -> do 
+     aminoMuts <- forM [0.. len1-1] $ \ ix -> do 
        let st = seq1 `index` ix
            en = seq2 `index` ix
        case aligns `index` ix of 
@@ -115,8 +114,8 @@ main = do
             realOut $ P.concat $ L.intersperse ", " $ 
               [takeBaseName wat, kind, [st], [en], show cnt, show numMuts]
 --            chatter$ "  "++[st]++" "++[en]++" "++show cnt
-     printTable "NonSynon" $ rights $ catMaybes codingMuts
-     printTable "Synon"    $ lefts  $ catMaybes codingMuts
+     printTable "NonSynon" $ rights $ catMaybes aminoMuts
+     printTable "Synon"    $ lefts  $ catMaybes aminoMuts
      return ()
 
 realOut :: String -> IO ()
