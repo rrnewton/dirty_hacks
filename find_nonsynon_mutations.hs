@@ -73,7 +73,9 @@ main = do
          len2   = T.length aligns
          len3   = T.length seq2
 
-     -- The second file has the amino acids:
+     -- The second file has the amino acids info.
+     -- Currently we ONLY read the lines that say what CHANGED:
+     -- (We don't read the amino acid data itself.)
      let aminoLines = P.filter (T.any (== '*')) $ 
                       T.lines t2
          whitespaceDistro = P.map (T.length . T.takeWhile isSpace) aminoLines
@@ -99,8 +101,13 @@ main = do
      aminoMuts <- forM [0.. len1-1] $ \ ix -> do 
        let st = seq1 `index` ix
            en = seq2 `index` ix
+           codon1 = getCodon seq1 ix
+           codon2 = getCodon seq2 ix
        case aligns `index` ix of 
-         '.' -> do chatterNoLn$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
+         '.' -> do chatterNoLn$ "  Mutation at base-pair position "++show ix
+                                 ++" (pos "++(show$ 1 + (ix `mod` 3))++" of 3), "++[st]++" -> "++[en]
+                                 ++", or "++codon1++" -> "++codon2
+--                                 ++", or "++codon1++" -> "++codon2
                    case aminoChanges `index` (ix `quot` 3) of
                      '*' -> do chatter ", synonymous."
                                return (Just (Left (st,en)))
@@ -117,6 +124,22 @@ main = do
      printTable "NonSynon" $ rights $ catMaybes aminoMuts
      printTable "Synon"    $ lefts  $ catMaybes aminoMuts
      return ()
+
+-- | Project not just one basepair, but all three basepairs in the codon.
+--   Assumes that the sequence is an aligned reading frame.
+getCodon :: Text -> Int -> String
+getCodon theseq ix =
+--  trace ("\n grabbing pos "++show ix++" from start "++show st++"\n")$ 
+  [ carefulRef st
+  , carefulRef (st+1)
+  , carefulRef (st+2) ]
+  where
+    carefulRef :: Int -> Char
+    carefulRef ind | ind >= len = '_'
+                   | otherwise  = T.index theseq ind
+    len = T.length theseq
+    st = q * 3
+    (q,_r) = ix `quotRem` 3
 
 realOut :: String -> IO ()
 realOut str = do 
@@ -161,6 +184,7 @@ validAlignChar _   = False
 
 
 -- Amino Acid	SLC	DNA codons
+table :: [(String, String, [String])]
 table = 
   [ ("Isoleucine",	"I",	["ATT", "ATC", "ATA"])
   , ("Leucine",	        "L",	["CTT", "CTC", "CTA", "CTG", "TTA", "TTG"])
