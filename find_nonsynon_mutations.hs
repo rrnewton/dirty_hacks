@@ -110,16 +110,16 @@ main = do
 --                                 ++", or "++codon1++" -> "++codon2
                    case aminoChanges `index` (ix `quot` 3) of
                      '*' -> do chatter ", synonymous."
-                               return (Just (Left (st,en)))
+                               return (Just (Left (codon1,codon2)))
                      _   -> do chatter ", non-synonymous."
-                               return (Just (Right (st,en)))
+                               return (Just (Right (codon1,codon2)))
          _   -> return Nothing
      chatter "\nFinal table data, CSV format:"
      realOut "File, Kind, From, To, Count, TotalMuts"
      let printTable kind changes = do 
           forM_ (frequency changes) $ \ ((st,en),cnt) -> do
             realOut $ P.concat $ L.intersperse ", " $ 
-              [takeBaseName wat, kind, [st], [en], show cnt, show numMuts]
+              [takeBaseName wat, kind, st, en, show cnt, show numMuts]
 --            chatter$ "  "++[st]++" "++[en]++" "++show cnt
      printTable "NonSynon" $ rights $ catMaybes aminoMuts
      printTable "Synon"    $ lefts  $ catMaybes aminoMuts
@@ -167,6 +167,7 @@ isComment t = f (strip t)
       | T.head x == '#' = True
       | otherwise       = False
 
+-- | Go from a list to an association list that counts duplicates.
 frequency :: (Ord a) => [a] -> [(a, Int)]
 frequency xs = toList (fromListWith (+) [(x, 1) | x <- xs])
 
