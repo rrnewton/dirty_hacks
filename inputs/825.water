@@ -1,0 +1,110 @@
+########################################
+# Program: water
+# Rundate: Thu  3 Jun 2010 11:47:47
+# Commandline: water
+#    -asequence 825_A.ffn
+#    -bsequence 825_B.ffn
+#    -gapopen 10
+#    -gapextend 0.5
+#    -outfile 825.water
+# Align_format: srspair
+# Report_file: 825.water
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: 13_6
+# 2: contig00221_7
+# Matrix: EDNAFULL
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 909
+# Identity:     907/909 (99.8%)
+# Similarity:   907/909 (99.8%)
+# Gaps:           1/909 ( 0.1%)
+# Score: 4521.0
+# 
+#
+#=======================================
+
+13_6               1 ATCCAAAAGGCAAAACTTTATTTAACAATAATAATGATTTTGAGAAACAA     50
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    392 ATCCAAAAGGCAAAACTTTATTTAACAATAATAATGATTTTGAGAAACAA    441
+
+13_6              51 GTACTTAATAATGGTTAAAAAGTTACTAAAGATAAATTATGCAAATGAAT    100
+                     |||||||||||| |||||||||||||||||||||||||||||||||||||
+contig00221_7    442 GTACTTAATAAT-GTTAAAAAGTTACTAAAGATAAATTATGCAAATGAAT    490
+
+13_6             101 TTGATAAAGAATTTAGCTTATGTAAAGAAGTAATCGATCACTATTATTCT    150
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    491 TTGATAAAGAATTTAGCTTATGTAAAGAAGTAATCGATCACTATTATTCT    540
+
+13_6             151 ATCCACAATATAAAAGTAGATAAAGATATAGCATTACTATTTTCTAGTTA    200
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    541 ATCCACAATATAAAAGTAGATAAAGATATAGCATTACTATTTTCTAGTTA    590
+
+13_6             201 TGGCATATTTTCTATACATACCAAAGATAATGATATTTCCAAAGATAAAG    250
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    591 TGGCATATTTTCTATACATACCAAAGATAATGATATTTCCAAAGATAAAG    640
+
+13_6             251 ATATTTTATCGCTTAATCAATATATTAATGAGAAAGCTAAAATGATCAAT    300
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    641 ATATTTTATCGCTTAATCAATATATTAATGAGAAAGCTAAAATGATCAAT    690
+
+13_6             301 ACACCACTGTATTTTGATTACATTGTGAGATTATCACAAATGTTAAGCAA    350
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    691 ACACCACTGTATTTTGATTACATTGTGAGATTATCACAAATGTTAAGCAA    740
+
+13_6             351 AATCGAGTTACTAAGTAGAGATGGAACCATCAAATATACAGCCGACTGTG    400
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    741 AATCGAGTTACTAAGTAGAGATGGAACCATCAAATATACAGCCGACTGTG    790
+
+13_6             401 AAAATATGGATTGGCAAGAGGAAGAATTGAAAATGAATGGATTAATATGT    450
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    791 AAAATATGGATTGGCAAGAGGAAGAATTGAAAATGAATGGATTAATATGT    840
+
+13_6             451 CCTATAAATACAAAAAACACCCTAGAGCAACTGTTAAAGAACCAAAATAG    500
+                     ||||||||||||||||||||||||||||||||||||||.|||||||||||
+contig00221_7    841 CCTATAAATACAAAAAACACCCTAGAGCAACTGTTAAAAAACCAAAATAG    890
+
+13_6             501 TGATGAATTTGAACAATTAATAACGAGCCCTGAGAATATATACTACTCAG    550
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    891 TGATGAATTTGAACAATTAATAACGAGCCCTGAGAATATATACTACTCAG    940
+
+13_6             551 TGTTGCCAGAAGAGAATGAATATAGGCCAGATCTCATTGTCAGCAAGAAA    600
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    941 TGTTGCCAGAAGAGAATGAATATAGGCCAGATCTCATTGTCAGCAAGAAA    990
+
+13_6             601 AAAGAAAAGGACCATAAAAACACAGTCTGTAAACTTATTTTAGGTATGTT    650
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7    991 AAAGAAAAGGACCATAAAAACACAGTCTGTAAACTTATTTTAGGTATGTT   1040
+
+13_6             651 TGTATTATCTGTTGGGTTATATGTTGCTGATTATTTCTTTATGGAGCAAA    700
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7   1041 TGTATTATCTGTTGGGTTATATGTTGCTGATTATTTCTTTATGGAGCAAA   1090
+
+13_6             701 AATTGTTCAACTCAATAAAGAATGTTTTGCCACAAGACAACCTTACTAAC    750
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7   1091 AATTGTTCAACTCAATAAAGAATGTTTTGCCACAAGACAACCTTACTAAC   1140
+
+13_6             751 CTGATAGTTGGTGCGGTGCTTACTATTGTAATAGTATATGCTTTATTTCA    800
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7   1141 CTGATAGTTGGTGCGGTGCTTACTATTGTAATAGTATATGCTTTATTTCA   1190
+
+13_6             801 ATTATCACAGAAACCACCACTTTCAACAGTCGATGATGTGCAGAATACCG    850
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7   1191 ATTATCACAGAAACCACCACTTTCAACAGTCGATGATGTGCAGAATACCG   1240
+
+13_6             851 CTCCATGCAAAATAAGCTTAGAACTACATAAATGTAGCAACTTAAAAGCA    900
+                     ||||||||||||||||||||||||||||||||||||||||||||||||||
+contig00221_7   1241 CTCCATGCAAAATAAGCTTAGAACTACATAAATGTAGCAACTTAAAAGCA   1290
+
+13_6             901 CATATTGTA    909
+                     |||||||||
+contig00221_7   1291 CATATTGTA   1299
+
+
+#---------------------------------------
+#---------------------------------------

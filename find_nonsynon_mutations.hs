@@ -78,8 +78,8 @@ main = do
                   T.lines t2
          whitespaceDistro = P.map (T.length . T.takeWhile isSpace) coding
          whitespaceMax    = P.minimum whitespaceDistro
-         codingChanges0   = T.concat $ P.map (T.drop whitespaceMax) coding
-         codingChanges    = T.dropWhile (== ' ') codingChanges0
+         aminoChanges0   = T.concat $ P.map (T.drop whitespaceMax) coding
+         aminoChanges    = T.dropWhile (== ' ') aminoChanges0
 
          numMuts = (T.count "." aligns)
 
@@ -90,19 +90,19 @@ main = do
         error "Cannot proceed! Length mismatch."
      chatter$ "Number of total mutations: "++ show numMuts
      chatter$ "Number of total insertions: "++ show(T.count "-" aligns)
-     chatter$ "Number of amino acids: "++show (T.length codingChanges)
-     chatter$ " (Dropped "++show (T.length codingChanges0 - T.length codingChanges)++" spaces from beginning of amino acid allignment.)"
-     chatter$ " (Leading whitespace length distribution for coding patterns: "++show whitespaceDistro++")"
-     unless (T.length codingChanges == len1 `quot` 3) $
-       error ("Expected number of coding changes to be "++show(len1 `quot` 3))
---     chatter$ "Coding or non-coding changes?: "++show codingChanges
+     chatter$ "Number of amino acids: "++show (T.length aminoChanges)
+     chatter$ " (Dropped "++show (T.length aminoChanges0 - T.length aminoChanges)++" spaces from beginning of amino acid allignment.)"
+     chatter$ " (Leading whitespace length distribution for synonymity (amino) patterns: "++show whitespaceDistro++")"
+     unless (T.length aminoChanges == len1 `quot` 3) $
+       error ("Expected number of amino changes to be "++show(len1 `quot` 3))
+--     chatter$ "Coding or non-coding changes?: "++show aminoChanges
 
      codingMuts <- forM [0.. len1-1] $ \ ix -> do 
        let st = seq1 `index` ix
            en = seq2 `index` ix
        case aligns `index` ix of 
          '.' -> do chatterNoLn$ "  Mutation at base-pair position "++show ix++", "++[st]++" -> "++[en]
-                   case codingChanges `index` (ix `quot` 3) of
+                   case aminoChanges `index` (ix `quot` 3) of
                      '*' -> do chatter ", synonymous."
                                return (Just (Left (st,en)))
                      _   -> do chatter ", non-synonymous."
@@ -159,3 +159,30 @@ validAlignChar '.' = True
 validAlignChar '-' = True
 validAlignChar '|' = True
 validAlignChar _   = False
+
+
+-- Amino Acid	SLC	DNA codons
+table = 
+  [ ("Isoleucine",	"I",	["ATT", "ATC", "ATA"])
+  , ("Leucine",	        "L",	["CTT", "CTC", "CTA", "CTG", "TTA", "TTG"])
+  , ("Valine",	        "V",	["GTT", "GTC", "GTA", "GTG"])
+  , ("Phenylalanine",	"F",	["TTT", "TTC"])
+  , ("Methionine",	"M",	["ATG"])
+  , ("Cysteine",	"C",	["TGT", "TGC"])
+  , ("Alanine",	        "A",	["GCT", "GCC", "GCA", "GCG"])
+  , ("Glycine",	        "G",	["GGT", "GGC", "GGA", "GGG"])
+  , ("Proline",	        "P",	["CCT", "CCC", "CCA", "CCG"])
+  , ("Threonine",	"T",	["ACT", "ACC", "ACA", "ACG"])
+  , ("Serine",	        "S",	["TCT", "TCC", "TCA", "TCG", "AGT", "AGC"])
+  , ("Tyrosine",	"Y",	["TAT", "TAC"])
+  , ("Tryptophan",	"W",	["TGG"])
+  , ("Glutamine",	"Q",	["CAA", "CAG"])
+  , ("Asparagine",	"N",	["AAT", "AAC"])
+  , ("Histidine",	"H",	["CAT", "CAC"])
+  , ("Glutamic_acid",	"E",	["GAA", "GAG"])
+  , ("Aspartic_acid",	"D",	["GAT", "GAC"])
+  , ("Lysine",	        "K",	["AAA", "AAG"])
+  , ("Arginine",	"R",	["CGT", "CGC", "CGA", "CGG", "AGA", "AGG"])
+  , ("Stop_codons",	"Stop",	["TAA", "TAG", "TGA"])
+  ]
+  
